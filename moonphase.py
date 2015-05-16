@@ -6,8 +6,7 @@ try:
 except NameError:
     pass
 
-__doc__ = \
-"""
+__doc__ = """\
 Usage:   moonphase.py [year month day]
 
 Using calculator from
@@ -32,7 +31,7 @@ If year, month and day are not provided, input is requested.
 Handles years from 1800 to 3099.
 """
 
-def main(year, month, day, do_print=False):
+def moonphase(year, month, day, do_print=False):
     h = year // 100             # integer division for the century
     yy = year % 100             # year within the century
 
@@ -123,4 +122,4 @@ if __name__ == "__main__":
         month = int(input('Enter month ==> '))
         day = int(input('Enter day ==> '))
 
-    phase = main(year, month, day, True)
+    phase = moonphase(year, month, day, True)
