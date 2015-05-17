@@ -37,6 +37,17 @@ def dayofweek(year, month, day, do_print=False):
     # Year correction within century using the dozens rule
     yc = yy // 12 + yy % 12 + (yy%12)//4
 
+    if do_print:
+        # Alternative calculation for yc
+        oddp11 = (yy + (yy%2)*11) // 2
+        print("({} + {}*11) / 2 = {}".format(yy, yy%2,oddp11))
+        o1 = oddp11
+        oddp11 = (o1 + (o1%2)*11) % 7
+        print("({} + {}*11) % 7 = {}".format(o1, o1%2, oddp11))
+        o2 = oddp11
+        oddp11 = 7 - oddp11
+        print("7 - {} = {}".format(o2, oddp11))
+
     # Doomsday for the year
     pi_day = (c + yc) % 7
 
