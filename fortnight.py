@@ -75,7 +75,7 @@ def fortnight(year, month, day, do_print=False):
 
     if (do_print):
         print("Year in century (yy) =", yy)
-        print("Century correction (c) =", c)
+        print("Century correction (c) = (12*({}%8) + ({}%8)/4 + 2)%14 = {}".format(h,h,c))
         print("yc = yy/12 + yy%12 + (yy%12)/4 =",
               yy//12, "+", yy%12, "+", (yy%12)//4, "=", yc)
         print("Pi day for the year = (c + yc) % 14 =",
@@ -98,4 +98,4 @@ if __name__ == "__main__":
         month = int(input('Enter month ==> '))
         day = int(input('Enter day ==> '))
 
-    weekday = dayofweek(year, month, day, True)
+    weekday = fortnight(year, month, day, True)
