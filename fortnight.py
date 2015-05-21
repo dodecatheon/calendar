@@ -7,32 +7,41 @@ except NameError:
     pass
 
 __doc__ = """\
-Usage:   biweekly.py [year month day]
+Usage:   fortnight.py [year month day]
 
-Returns day of week for any Gregorian date, using mental math method from
+Returns day of week in a fortnight for any Gregorian date, using a
+variation of the mental math method from
 
-http://rudy.ca/doomsday-links.html
+http://jimvb.home.mindspring.com/doom14.html
 
 which is based on Conway's day of week for any date algorithm from
 "Winning Ways for your Mathematical Plays, Volume 2" (1980).
+For reference to the original Doomsday Rule, see http://rudy.ca/doomsday.html .
 
 If year, month and day are not provided, input is requested.
 
-Also returns Left or Right to indicate the 0th or 1st week of the biweekly
-cycle.  Base month is chosen to be February 2015, with the paycheck on the
-2nd and 4th Fridays of the month.
+The fortnight returned is a number between 0 and 13.
+
+Also returns Left or Right to indicate the 0th or 1st week of the
+biweekly cycle.  Base month is chosen to be February 2015, with the
+paycheck (Right Friday) on the 2nd and 4th Fridays of the month.
+
+Days 0-6 are Left Sunday through Left Saturday.
+Days 7-13 are Right Sunday through Right Saturday.
 """
 
-def dayofweek(year, month, day, do_print=False):
+def fortnight(year, month, day, do_print=False):
     h = year // 100             # integer division for the century
     yy = year % 100             # year within the century
 
-    # Basic century correction is same as doomsday.py:
-    c = (5 * (h % 4) + 2) % 7   # Century correction
+    # Modified century correction
+    # Original doomsday c = (5 * (h % 4) + 2) % 7
+    # We determine bi-weekly correction by computing the dozens rule
+    # for 100 years, with no leap day in non-400 centuries
+    c = (12*(h%8) + (h%8)//4 + 2) % 14
 
-    # ... but now we add a correction for which biweekly cycle
-    # it's in:
-    c += (((h + 2)%8) // 4) * 7
+    # To reverse L and R, change formula to
+    # c = (12*(h%8) + (h%8)//4 + 9) % 14
 
     # Doomsday reference day for each month, corrected to match
     # the biweekly cycle.
@@ -44,14 +53,15 @@ def dayofweek(year, month, day, do_print=False):
         if ((yy % 4) == 0):
             dd += 1
 
-    # Year correction within century using the dozens rule
+    # Year correction within century using the dozens rule, which
+    # gives the correct day of week modulo 14.
     yc = yy // 12 + yy % 12 + (yy%12) // 4
 
     # Doomsday for the year
     pi_day = (c + yc) % 14
 
     # Day of week for desired date:
-    weekday = (pi_day + (day - dd) + 28) % 14
+    weekday = (pi_day + (day - dd) + 14) % 14
 
     def fullname(wd):
         dayname = {0:"Sunday",
