@@ -61,10 +61,10 @@ def dayofweek(year, month, day, do_print=False):
         print(("\nCalculating the year-in-century correction with "
                "the 'odd plus 11' rule:"))
         oddp11 = (yy + (yy%2)*11) // 2
-        print("\t({} + {}*11) / 2 = {}".format(yy, yy%2,oddp11))
+        print("\t({} + ({}%2)*11) / 2 = {}".format(yy, yy,oddp11))
         o1 = oddp11
         oddp11 = (o1 + (o1%2)*11) % 7
-        print("\t({} + {}*11) % 7 = {}".format(o1, o1%2, oddp11))
+        print("\t({} + ({}%2)*11) % 7 = {}".format(o1, o1, oddp11))
         o2 = oddp11
         oddp11 = 7 - oddp11
         print("\t7 - {} = {}".format(o2, oddp11))
