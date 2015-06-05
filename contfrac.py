@@ -17,6 +17,7 @@ from math import log10, floor, sqrt
 MAX_PLACES = 8
 EPS = 1.e-14
 
+# TO DO:  Figure out how to turn this into a generator
 def continued_fraction(x, max_places=MAX_PLACES, eps=EPS):
     x_orig = x
     small = sqrt(eps)
