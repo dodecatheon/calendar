@@ -1,12 +1,20 @@
 #!/usr/bin/env python
-"""
+# Python 3 compatibility
+from __future__ import print_function, division
+try:
+    range = xrange
+    input = raw_input
+except NameError:
+    pass
+
+__doc__ = """\
 Print out continued fraction terms of a decimal fraction, with
 rational approximations.
 """
 from math import log10, floor, sqrt
 
 # Default constants
-MAX_PLACES = 10
+MAX_PLACES = 8
 EPS = 1.e-14
 
 def continued_fraction(x, max_places=MAX_PLACES, eps=EPS):
@@ -62,14 +70,14 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         x = float(sys.argv[1])
     else:
-        x = float(raw_input('Enter x to be approximated ==> '))
+        x = float(input('Enter x to be approximated ==> '))
 
-    fmt = ( " a_%(i)2.2d = %(a)5d ; "
-            "x ~= %(p)10d / %(q)10d "
-            "= %(approx)20.15f, "
-            "err = %(err)+13.8e" )
+    fmt = ( " a_{i:02} = {a:5} ; "
+            "x ~= {p:10} / {q:10} "
+            "= {approx:20.15f}, "
+            "err = {err:+13.8e}" )
 
-    print "Continued fraction terms, with rational approximations:"
+    print("Continued fraction terms, with rational approximations:")
 
     for i, (a, p, q) in enumerate(continued_fraction(x)):
 
@@ -77,9 +85,9 @@ if __name__ == "__main__":
         approx = float(p) / q
         err = approx - x
 
-        print fmt % {'i':i,
-                     'a':a,
-                     'p':p,
-                     'q':q,
-                     'approx':approx,
-                     'err':err }
+        print(fmt.format(i=i,
+                         a=a,
+                         p=p,
+                         q=q,
+                         approx=approx,
+                         err=err))
