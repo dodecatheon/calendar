@@ -65,14 +65,7 @@ def continued_fraction(x, max_places=MAX_PLACES, eps=EPS):
 
     return terms
 
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) == 2:
-        x = float(sys.argv[1])
-    else:
-        x = float(input('Enter x to be approximated ==> '))
-
+def main(x):
     fmt = ( " a_{i:02} = {a:5} ; "
             "x ~= {p:10} / {q:10} "
             "= {approx:20.15f}, "
@@ -92,3 +85,14 @@ if __name__ == "__main__":
                          q=q,
                          approx=approx,
                          err=err))
+    return None
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) == 2:
+        x = float(sys.argv[1])
+    else:
+        x = float(input('Enter x to be approximated ==> '))
+
+    main(x)
