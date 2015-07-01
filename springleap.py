@@ -68,11 +68,17 @@ which in practice means switching from cycles of 14*33 + 29 to cycles of
 
 def springleap(year, do_print=False):
 
-    yy = year - 1711
-    while (yy < 0):
-        yy += 2488
+    # yy = year - 1711
+    # while (yy < 0):
+    #     yy += 2488
+    #
+    # z = (((yy % 2488) % 1997) % 491) % 33
 
-    z = (((yy % 2488) % 1997) % 491) % 33
+    yy = year - 1319
+    while (yy < 0):
+        yy += 949
+
+    z = (((yy % 949) % 458) % 33)
 
     if z > 0 and z % 4 == 0:
         rectleap = True
@@ -99,7 +105,7 @@ def springleap(year, do_print=False):
             yyy = year
 
         string = ephem.next_vernal_equinox(str(yyy))
-        print(year, tradleap, rectleap, string)
+        print(year, tradleap, rectleap, y % 4, z, string)
 
     return (tradleap, rectleap)
 
