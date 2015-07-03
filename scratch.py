@@ -28,13 +28,29 @@ tupm1 = (-11,1,1,1,1,1)
 count = 0
 for tup in springs:
     diff = tup[0] - tupm1[0]
-    # z = (((tup[0]-1058 + 2158) % 2158) % 425) % 33
-    # z = ((((tup[0]-1710 + 2488*3) % 2488) % 1997) % 491) % 33  # count = 18
-    z = (((((tup[0]-1318 + 949*5)) % 949) % 458) % 33) # count = 17
-    print('{:4}, {:2}, {:2}, {}'.format(tup[0], diff, z, tup[1:]))
-    if 1058 <= tup[0] <= 3872:
-        if z != 0:
-            count += 1
     tupm1 = tup
+    if tup[0] < 1058:
+        z = ((tup[0] - 18) % 260) % 33
+    elif tup[0] < 4297:
+        # 2 cycles of 14*33+29 plus 1 cycle of 13*33+29
+        z = ((((tup[0]-1776 + 1440)) % 1440) % 491) % 33 # 19
+    elif tup[0] < 5304:
+        # 3 cycles of 7*33 + 29 plus 1 cycle of 6*33 + 29:
+        z = (((tup[0]-4297) % 1007) % 260) % 33
+    elif tup[0] < 5465:
+        # 4*33 + 29
+        z = ((tup[0] - 5304) % 161) % 33
+    elif tup[0] < 6456:
+        # 7 cycles of 3*33 + 29
+        z = ((tup[0] - 5465) % 128) % 33
+    elif tup[0] < 6803:
+        # 2*33 + 29
+        z = ((tup[0] - 6456) % 95) % 33
+    else:
+        # 33 + 29
+        z = ((tup[0] - 6803) % 62) % 33
+    print('{:4}, {:2}, {:2}, {}'.format(tup[0], diff, z, tup[1:]))
+    if z != 0:
+        count += 1
 
 print('Count = ', count)
