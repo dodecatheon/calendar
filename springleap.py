@@ -22,7 +22,8 @@ approximation calendar, with a year 365 days, 5 hours, 49 minutes long
 Zero year is set to 1777 CE, with year one at 1718CE.
 
 This has excellent accuracy for years 1058 through 4297, with only 19
-years that miss having spring on 3/21 UT by one day.
+years that miss having spring on 3/21 UT by one day.  The accuracy is
+even good enough to get up to 4557 with only one more off year.
 
 In year 4297CE, the calendar should be adjusted for years 4297 tto 5882,
 during which the mean equinoctial year changes substantially, to
