@@ -33,31 +33,37 @@ during which the mean equinoctial year changes substantially, to
 which in practice means switching from cycles of 14*33 + 29 to cycles of
 5 or 6 * 33 + 29.
 """
+def diffmod(year, offset, *mods):
+    z = year - offset
+    while z < 0:
+        z += mods[0]
+    for mod in mods:
+        z %= mod
+    return z, (z > 0 and z % 4 == 0)
 
 def springleap(year, do_print=False):
 
-    # yy = year - 1711
-    # while (yy < 0):
-    #     yy += 2488
-    #
-    # z = (((yy % 2488) % 1997) % 491) % 33
+    # The type of modulo we use depends on the interval this
+    # year falls in.
+    for yearbin in [1059, 4298, 5305, 5466, 6457, 6804, 50000]:
+        if year < yearbin:
+            break
 
-    # yy = year - 1319
-    # while (yy < 0):
-    #     yy += 949
-    #
-    # z = (((yy % 949) % 458) % 33)
+    # print("yearbin =", yearbin)
 
-    yy = year - 1777
-    while (yy < 0):
-        yy += 1440
+    # extract the appropriate offset and moduli to use for the appropriate
+    # year bin.
+    mods = {1059:(18,260,33),            # repeat cycles of 3*33 + 29
+            4298:(1777,1440,491,33),     # 2 cycles of 14*33+29 plus 1 cycle of 13*33+29
+            5305:(4298,1007,260,33),     # 3 cycles of 7*33 + 29 plus 1 cycle of 6*33 + 29:
+            5466:(5305,161,33),          # 4*33 + 29
+            6457:(5466,128,33),          # 7 cycles of 3*33 + 29
+            6804:(6457,95,33),           # 2*33 + 29
+            50000:(6804,62,33)}[yearbin] # 33 + 29
 
-    z = (((yy % 1440) % 491) % 33)
+    # print("mods =", mods)
 
-    if z > 0 and z % 4 == 0:
-        rectleap = True
-    else:
-        rectleap = False
+    z, rectleap = diffmod(year, *mods)
 
     y = year
     while (y < 0):
@@ -78,8 +84,12 @@ def springleap(year, do_print=False):
         else:
             yyy = year
 
-        string = ephem.next_vernal_equinox(str(yyy))
-        print(year, tradleap, rectleap, y % 4, z, string)
+        print(year,
+              tradleap,
+              rectleap,
+              y % 4,
+              z,
+              ephem.next_vernal_equinox(str(yyy)))
 
     return (tradleap, rectleap)
 
