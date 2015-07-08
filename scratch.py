@@ -49,6 +49,7 @@ tupm1 = (r1-12,1,1,1,1,1)
 count = 0
 lastdiff33 = 4
 leaps = 0
+totalleaps = 0
 for tup in springs:
     diff = tup[0] - tupm1[0]
     tupm1 = tup
@@ -75,12 +76,14 @@ for tup in springs:
     else:
         # 33 + 29
         z = ((tup[0] - 6803) % 62) % 33
+
     if diff == 33:
         lastdiff33 += 1
     else:
         lastdiff = tup[0] - last29
         last29 = tup[0]
-        leaps += lastdiff33 * 8 + diff // 4
+        leaps = lastdiff33 * 8 + diff // 4
+        totalleaps += leaps
         print(('{:4}, '
                '{:2}, '
                '{:2}, '
@@ -103,4 +106,4 @@ for tup in springs:
     if z != 0:
         count += 1
 
-print('Count = ', count)
+print('Count = ', count, ', totalleaps = ', totalleaps)
