@@ -56,7 +56,7 @@ def moonphase(year, month, day, do_print=False):
 
     # Golden number correction:  modulo 30, from -29 to 29.
     gc = g * 11
-    while ( gc < -30 ): gc += 30;
+    while ( gc < -29 ): gc += 30;
     if (gc > 0): gc %= 30;
 
     # January/February correction:
@@ -71,8 +71,8 @@ def moonphase(year, month, day, do_print=False):
         # It's nice to see what the Golden correction for the year
         # plus the century correction is.  This lets us quickly calculate the
         # correction for any other date in the same year.
-        gcpc = gc + c
-        if gcpc < 0:
+        gcpc = (gc + c) % 30
+        if gcpc <= 0:
             gcpc_alt = gcpc + 30
         else:
             gcpc_alt = gcpc - 30
@@ -85,10 +85,11 @@ def moonphase(year, month, day, do_print=False):
         print("Dates in the year", year,
               "have moon phase correction gc + c =",
               gcpc, "or", gcpc_alt)
-        print("\n\t{:04}/{:02}/{:02} has moon phase {}\n".format(year,
-                                                                 month,
-                                                                 day,
-                                                                 phase))
+        print(("\n\t{:04}/{:02}/{:02} has "
+               "estimated moon phase = {}\n").format(year,
+                                                   month,
+                                                   day,
+                                                   phase))
         if phase < 2:
             print("\tNew moon [or slightly after]")
         elif phase < 7:
@@ -108,6 +109,15 @@ def moonphase(year, month, day, do_print=False):
         elif phase < 31:
             print("\tNew moon [or slightly before]")
 
+        try:
+            # If you have the ephem package installed, you
+            # can compare the estimate to the actual lunar phase
+            import ephem
+            thisdate = ephem.Date('{:04}/{:02}/{:02} 00:00:01'.format(year, month, day))
+            print("\n\tPrevious new moon on ", ephem.previous_new_moon(thisdate))
+            print("\n\tNext new moon on ", ephem.next_new_moon(thisdate))
+        except:
+            pass
     return phase
 
 if __name__ == "__main__":

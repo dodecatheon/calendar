@@ -27,6 +27,10 @@ or
 """
 
 def leapmonth(hyear, do_print=False):
+    if hyear < 2500:
+        # Assume we've received a CE year
+        hyear += 3760
+
     tradleap = ((7 * hyear + 1) % 19) < 7
     rectleap = ((130 * hyear + 268) % 353) < 130
 
