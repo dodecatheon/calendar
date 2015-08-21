@@ -6,28 +6,86 @@ try:
 except NameError:
     pass
 
-import radar
 import datetime
 from moonphase import moonphase
+from doomsday import dayofweek
+from random import randint
 
-start = datetime.datetime(year=1753, month=1, day=1)
-stop = datetime.datetime(year=2300,month=1,day=1)
-randdate = radar.random_datetime(start=start, stop=stop)
+__doc__="""\
+Test your ability to guess the day of the week and the age of the moon
+for a not-quite uniformly random date between 1700 and 2299.
+"""
 
-y, m, d = [int(x) for x in randdate.isoformat()[:10].split('-')]
+# Create a random date
+cc = randint(17,22)
+yy = randint(0,99)
+m = randint(1,12)
 
-print(y, m, d)
+y = cc * 100 + yy
 
-foo = input('Mentally calculate the day of the week, then hit enter to check it:')
+def monthlength(mm, yy, cc):
+    if mm in [9,4,6,11]: # 30 days hath September, April, June, and November
+        days = 30
+    elif mm != 2:               # All the rest have 31
+        days = 31
+    elif mm == 2:               # Excepting February alone
+        days = 28               # Which has 28 days clear
+        if ((yy == 0 and cc % 4 == 0) or
+            (yy >  0 and yy % 4 == 0)):
+            days = 29           # and 29 in each leap year,
+            # (as long as it's a year evenly divisible by 400)
+    return days
 
-print({ 0: '(0) Sunday',
-        1: '(1) Monday',
-        2: '(2) Tuesday',
-        3: '(3) Wednesday',
-        4: '(4) Thursday',
-        5: '(5) Friday',
-        6: '(6) Saturday' }[randdate.isoweekday() % 7])
+d = randint(1, monthlength(m, yy, cc))
 
-foo = input('Mentally calculate the phase of the moon, then hit enter to check it:')
+randdate = datetime.datetime(year=y, month=m, day=d)
+
+print("{}/{:02}/{:02}\n".format(y,m,d))
+
+actual = randdate.isoweekday() % 7
+
+date_dict = { 0: '0 (Sunday)',
+              1: '1 (Monday)',
+              2: '2 (Tuesday)',
+              3: '3 (Wednesday)',
+              4: '4 (Thursday)',
+              5: '5 (Friday)',
+              6: '6 (Saturday)' }
+
+print("You have three chances to guess the day of the week for that date.")
+print("Enter a number between 0 (Sunday) and 6 (Saturday) at the prompt.")
+for i in range(3):
+    guess = int(input("What day of the week is {}/{:02}/{:02}?  [Attempt # {}]:  ".format(y,m,d,i+1)))
+
+    print("You guessed", date_dict[guess], ".")
+
+    if guess == actual:
+        print("Congratulations!  You guessed correctly.\n")
+        break
+    else:
+        print("Sorry, that was not correct.  Try again.")
+
+if i == 3:
+    print("Actual day of the week for {}/{:02}/{:02} is".format(y,m,d),
+          date_dict[actual], "\n")
+
+print("Doomsday Rule calculation:")
+doomsday = dayofweek(y, m, d, do_print=True)
+
+if doomsday != actual:
+    print("Note:  Doomsday Rule and datetime.isoweekday() calculate different days!")
+
+mp = moonphase(y, m, d, do_print=False)
+
+print("You have three chances to guess the phase of the moon for that date.")
+print("Enter a number between 0 and 29 at the prompt.")
+for i in range(3):
+    guess = int(input("What is the moon's age on {}/{:02}/{:02}?  [Attempt # {}']:  ".format(y,m,d,i+1)))
+
+    if guess == mp:
+        print("Congratulations!  You guessed correctly.\n")
+        break
+    else:
+        print("Sorry, that was not correct.  Try again.")
 
 mp = moonphase(y, m, d, do_print=True)

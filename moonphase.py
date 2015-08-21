@@ -28,7 +28,7 @@ Estimate the age of the moon from 0 to 29 for a particular date
 
 If year, month and day are not provided, input is requested.
 
-Handles years from 1800 to 3099.
+Handles years from 1700 to 3099.
 """
 
 def moonphase(year, month, day, do_print=False):
@@ -44,10 +44,11 @@ def moonphase(year, month, day, do_print=False):
     # There is an interesting 6 century near-repetition in the
     # century correction.  It would be interesting to find a
     # algorithm that handles the different corrections between
-    # centuries 20|26, 21|27, and 24|30.
+    # centuries 17|23|29, 20|26, 21|27, and 24|30.
 
     try:
-        c = {18:1, 19:-4, 20:-8, 21:16, 22:11, 23:6,
+        c = {17:7,
+             18:1, 19:-4, 20:-8, 21:16, 22:11, 23:6,
              24:1, 25:-4, 26:-9, 27:15, 28:11, 29:6,
              30:0}[h]
     except KeyError:
