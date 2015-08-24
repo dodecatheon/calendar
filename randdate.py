@@ -60,10 +60,10 @@ for i in range(3):
     print("You guessed", date_dict[guess], ".")
 
     if guess == actual:
-        print("Congratulations!  You guessed correctly.\n")
+        print("\n\tCongratulations!  You guessed correctly.\n")
         break
     else:
-        print("Sorry, that was not correct.  Try again.")
+        print("\n\tSorry, that was not correct.  Try again.")
 
 if i == 3:
     print("Actual day of the week for {}/{:02}/{:02} is".format(y,m,d),
@@ -73,19 +73,19 @@ print("Doomsday Rule calculation:")
 doomsday = dayofweek(y, m, d, do_print=True)
 
 if doomsday != actual:
-    print("Note:  Doomsday Rule and datetime.isoweekday() calculate different days!")
+    print("\n\tNote:  Doomsday Rule and datetime.isoweekday() calculate different days!")
 
 mp = moonphase(y, m, d, do_print=False)
 
 print("You have three chances to guess the phase of the moon for that date.")
 print("Enter a number between 0 and 29 at the prompt.")
 for i in range(3):
-    guess = int(input("What is the moon's age on {}/{:02}/{:02}?  [Attempt # {}']:  ".format(y,m,d,i+1)))
+    guess = int(input("What is the moon's age on {}/{:02}/{:02}?  [Attempt # {}]:  ".format(y,m,d,i+1)))
 
     if guess == mp:
-        print("Congratulations!  You guessed correctly.\n")
+        print("\n\tCongratulations!  You guessed correctly.\n")
         break
     else:
-        print("Sorry, that was not correct.  Try again.")
+        print("\n\tSorry, that was not correct.  Try again.")
 
 mp = moonphase(y, m, d, do_print=True)
