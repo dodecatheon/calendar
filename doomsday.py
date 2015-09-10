@@ -68,12 +68,12 @@ def dayofweek(year, month, day, do_print=False):
         o2 = oddp11
         oddp11 = 7 - oddp11
         print("\t7 - {} = {}".format(o2, oddp11))
-        print("\nPi day for the year = (c + yc) % 7 =",
+        print("\nDoomsday for the year = (c + yc) % 7 =",
               pi_day, "({})".format(dayname[pi_day]))
 
-        print("\nPi day reference for the month is {:02}/{:02}".format(month,dd))
+        print("\nAnchor day reference for the month is {:02}/{:02}".format(month,dd))
 
-        print("Specified day is {} days from the monthly pi-day".format(day - dd))
+        print("Specified day is {} days from the monthly anchor".format(day - dd))
 
         print("\n\t{:04}/{:02}/{:02} falls on a {}\n".format(year,
                                                             month,

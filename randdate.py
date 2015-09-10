@@ -10,18 +10,12 @@ import datetime
 from moonphase import moonphase
 from doomsday import dayofweek
 from random import randint
+import sys
 
 __doc__="""\
 Test your ability to guess the day of the week and the age of the moon
 for a not-quite uniformly random date between 1700 and 2299.
 """
-
-# Create a random date
-cc = randint(17,22)
-yy = randint(0,99)
-m = randint(1,12)
-
-y = cc * 100 + yy
 
 def monthlength(mm, yy, cc):
     if mm in [9,4,6,11]: # 30 days hath September, April, June, and November
@@ -36,7 +30,19 @@ def monthlength(mm, yy, cc):
             # (as long as it's a year evenly divisible by 400)
     return days
 
-d = randint(1, monthlength(m, yy, cc))
+if len(sys.argv) == 4:
+    y = int(sys.argv[1])
+    m = int(sys.argv[2])
+    d = int(sys.argv[3])
+    cc = y // 100
+    yy = y % 100
+else:
+    # Create a random date
+    cc = randint(17,22)
+    yy = randint(0,99)
+    m = randint(1,12)
+    y = cc * 100 + yy
+    d = randint(1, monthlength(m, yy, cc))
 
 randdate = datetime.datetime(year=y, month=m, day=d)
 
@@ -55,7 +61,7 @@ date_dict = { 0: '0 (Sunday)',
 print("You have three chances to guess the day of the week for that date.")
 print("Enter a number between 0 (Sunday) and 6 (Saturday) at the prompt.")
 for i in range(3):
-    guess = int(input("What day of the week is {}/{:02}/{:02}?  [Attempt # {}]:  ".format(y,m,d,i+1)))
+    guess = int(input("What day of the week is {}/{:02}/{:02}?  [Attempt # {}] ==> ".format(y,m,d,i+1)))
 
     print("You guessed", date_dict[guess], ".")
 
@@ -80,7 +86,7 @@ mp = moonphase(y, m, d, do_print=False)
 print("You have three chances to guess the phase of the moon for that date.")
 print("Enter a number between 0 and 29 at the prompt.")
 for i in range(3):
-    guess = int(input("What is the moon's age on {}/{:02}/{:02}?  [Attempt # {}]:  ".format(y,m,d,i+1)))
+    guess = int(input("What is the moon's age on {}/{:02}/{:02}?  [Attempt # {}] ==> ".format(y,m,d,i+1)))
 
     if guess == mp:
         print("\n\tCongratulations!  You guessed correctly.\n")
