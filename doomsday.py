@@ -30,9 +30,10 @@ def dayofweek(year, month, day, do_print=False):
           7:11, 8:8, 9:5, 10:10, 11:7, 12:12}[month]
 
     # January/February correction for leap years
-    if month < 3:
-        if ((yy % 4) == 0):
-            dd += 1
+    if ((yy % 4) == 0):
+        if month < 3:
+            if yy > 0 or h%4 == 0:
+                dd += 1
 
     # Year correction within century using the dozens rule
     yc = yy // 12 + yy % 12 + (yy%12)//4
