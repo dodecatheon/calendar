@@ -30,6 +30,20 @@ If year, month and day are not provided, input is requested.
 
 Handles years from 1700 to 3099.
 """
+hmonths = {
+    12: 'ADAR',
+    5 : 'AV',
+    6 : 'ELUL',
+    8 : 'HESHVAN',
+    2 : 'IYYAR',
+    9 : 'KISLEV',
+    1 : 'NISAN',
+    11: 'SHEVAT',
+    3 : 'SIVAN',
+    4 : 'TAMMUZ',
+    10: 'TEVETH',
+    7 : 'TISHRI',
+    13: 'VEADAR' }
 
 def moonphase(year, month, day, do_print=False):
     h = year // 100             # integer division for the century
@@ -117,6 +131,17 @@ def moonphase(year, month, day, do_print=False):
             thisdate = ephem.Date('{:04}/{:02}/{:02} 00:00:01'.format(year, month, day))
             print("\n\tPrevious new moon on ", ephem.previous_new_moon(thisdate))
             print("\n\tNext new moon on ", ephem.next_new_moon(thisdate))
+        except:
+            pass
+
+        try:
+            # If you have convertdate installed, you can compare the lunar
+            # phase to the hebrew calendar date:
+            from convertdate import hebrew
+            hyear, hmonth, hday = hebrew.from_gregorian(year, month, day)
+            print("\n\tHebrew date = {} {}, {}\n".format( hday,
+                                                          hmonths[hmonth],
+                                                          hyear ))
         except:
             pass
     return phase
