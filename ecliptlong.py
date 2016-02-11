@@ -45,7 +45,25 @@ def ecliptlong(year, month, day, do_print=False):
         print("ecliptic longitude =", lam)
         print("astrological sign position =", astrosign)
         print("ecliptic octant =", octant)
-
+        try:
+            from convertdate import persian
+            pyear, pmonth, pday = persian.from_gregorian(year, month, day)
+            print("Persian date = {} {}, {}".format(pday,
+                                                    {1:'aries',
+                                                     2:'taurus',
+                                                     3:'gemini',
+                                                     4:'cancer',
+                                                     5:'leo',
+                                                     6:'virgo',
+                                                     7:'libra',
+                                                     8:'scorpio',
+                                                     9:'sagittarius',
+                                                     10:'capricorn',
+                                                     11:'aquarius',
+                                                     12:'pisces'}[pmonth],
+                                                    pyear))
+        except:
+            pass
     return lam
 
 if __name__ == "__main__":

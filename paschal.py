@@ -23,6 +23,7 @@ def paschal(year, do_print=False):
     offset_correction = 0
     if ( offset == 0 ) :
         offset_correction +=1
+    if ( offset == 1 ) :
         if g > 12:
             offset_correction += 1
 
@@ -75,7 +76,7 @@ if __name__ == "__main__":
         print("\tPaschal moon falls on a", dayname[weekday])
 
         # find the next Sunday
-        day += (7 - weekday) % 7
+        day += (7 - weekday + 6) % 7 + 1
         if day > 31:
             day -= 31
             month += 1
