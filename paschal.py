@@ -10,7 +10,18 @@ __doc__ = """\
 Date of the ecclesiastical paschal moon in any Gregorian year
 Use Conway's Doomsday Rule to find the date of the following Sunday.
 """
-from math import log10, floor, sqrt
+def IanTaylorEasterJscr(year):
+    a = year % 19
+    b = year >> 2
+    c = b // 25 + 1
+    d = (c * 3) >> 2
+    e = ((a * 19) - ((c * 8 + 5) // 25) + d + 15) % 30
+    e += (29578 - a - e * 32) >> 10
+    e -= ((year % 7) + b - d + e + 2) % 7
+    d = e >> 5
+    day = e - d * 31
+    month = d + 3
+    return year, month, day
 
 def paschal(year, do_print=False):
     h = year // 100
@@ -84,5 +95,12 @@ if __name__ == "__main__":
         monthname = {3:"March", 4:"April"}
         print("\tEaster {} falls on".format(year),
               monthname[month], day)
+
+        # Error checking:
+        cyear, cmonth, cday = IanTaylorEasterJscr(year)
+        if ( cmonth != month or cday != day ):
+            print("\t*** Conway calculation differs from computus ***")
+            print("\tComputus Easter falls on",
+                  monthname[cmonth], cday )
     except:
         pass
