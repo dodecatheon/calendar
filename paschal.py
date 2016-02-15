@@ -5,6 +5,7 @@ try:
     input = raw_input
 except NameError:
     pass
+from datetime import datetime
 
 __doc__ = """\
 Date of the ecclesiastical paschal moon in any Gregorian year
@@ -70,7 +71,9 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         year = int(sys.argv[1])
     else:
-        year = int(input('Enter year to be approximated ==> '))
+        print("Using today's year")
+        today = datetime.now()
+        year = today.year
 
     month, day = paschal(year, True)
 

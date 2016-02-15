@@ -8,6 +8,7 @@ try:
 except NameError:
     pass
 import ephem
+from datetime import datetime
 
 __doc__ = """\
 This function takes the CE calendar year as input, and
@@ -99,6 +100,8 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         year = int(sys.argv[1])
     else:
-        year = int(input('Enter Gregorian year to be checked ==> '))
+        print("Using this year")
+        today = datetime.now()
+        year = today.year
 
     tradleap, rectleap = springleap(year, True)

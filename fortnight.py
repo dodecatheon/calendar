@@ -5,6 +5,7 @@ try:
     input = raw_input
 except NameError:
     pass
+from datetime import datetime
 
 __doc__ = """\
 Usage:   fortnight.py [year month day]
@@ -94,8 +95,10 @@ if __name__ == "__main__":
         month = int(sys.argv[2])
         day = int(sys.argv[3])
     else:
-        year = int(input('Enter year ==> '))
-        month = int(input('Enter month ==> '))
-        day = int(input('Enter day ==> '))
+        print("Using today's date")
+        today = datetime.now()
+        year = today.year
+        month = today.month
+        day = today.day
 
     weekday = fortnight(year, month, day, True)
