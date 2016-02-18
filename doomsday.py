@@ -77,6 +77,8 @@ def dayofweek(year, month, day, do_print=False):
 
         print("Specified day is {} days from the monthly anchor".format(day - dd))
 
+        print("Offset in month is ({} - {} + 14) % 7 = {} days".format( day, dd, ((day-dd+14)%7)))
+
         print("\n\t{:04}/{:02}/{:02} falls on a {}\n".format(year,
                                                             month,
                                                             day,
