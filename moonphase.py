@@ -130,8 +130,8 @@ def moonphase(year, month, day, do_print=False):
             # can compare the estimate to the actual lunar phase
             import ephem
             thisdate = ephem.Date('{:04}/{:02}/{:02} 00:00:01'.format(year, month, day))
-            print("\n\tPrevious new moon on ", ephem.previous_new_moon(thisdate))
-            print("\n\tNext new moon on ", ephem.next_new_moon(thisdate))
+            print("\n\t{}".format(ephem.previous_new_moon(thisdate)), "UTC = Previous New Moon")
+            print("\n\t{}".format(ephem.next_new_moon(thisdate)), "UTC = Next New Moon")
         except:
             pass
 
