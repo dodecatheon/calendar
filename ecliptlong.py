@@ -39,12 +39,21 @@ def ecliptlong(year, month, day, do_print=False):
     lam = L + 1.915 * sin(g_rad) + 0.020 * sin(2*g_rad)
 
     if (do_print):
+        seasons = { 0:'SPRING',
+                    1:'SUMMER',
+                    2:'AUTUMN',
+                    3:'WINTER' }
+
         astrosign = lam / 30.
         octant = lam / 45.
+        season = seasons[octant//2]
+        xquarter = seasons[((octant+1)%8)//2]
         print("For day = {:04}/{:02}/{:02}:".format(year, month,day))
         print("ecliptic longitude =", lam)
         print("astrological sign position =", astrosign)
         print("ecliptic octant =", octant)
+        print("astronomical season =", season)
+        print("cross-quarter season =", xquarter)
         try:
             from convertdate import persian
             pyear, pmonth, pday = persian.from_gregorian(year, month, day)

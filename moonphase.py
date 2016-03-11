@@ -130,8 +130,22 @@ def moonphase(year, month, day, do_print=False):
             # can compare the estimate to the actual lunar phase
             import ephem
             thisdate = ephem.Date('{:04}/{:02}/{:02} 00:00:01'.format(year, month, day))
-            print("\n\t{}".format(ephem.previous_new_moon(thisdate)), "UTC = Previous New Moon")
-            print("\n\t{}".format(ephem.next_new_moon(thisdate)), "UTC = Next New Moon")
+            prevmoon = ephem.previous_new_moon(thisdate)
+            nextmoon = ephem.next_new_moon(thisdate)
+            prevymd = prevmoon.tuple()[:3]
+            nextymd = nextmoon.tuple()[:3]
+            print("\t{}".format(prevmoon), "UTC = Previous New Moon")
+            print("\t{}".format(nextmoon), "UTC = Next New Moon")
+            try:
+                from convertdate import julianday
+                thisjdc = julianday.from_gregorian(year, month, day)
+                prevjdc = julianday.from_gregorian(*prevymd)
+                nextjdc = julianday.from_gregorian(*nextymd)
+                print("\t{:2} days since prev new moon".format(int(thisjdc - prevjdc)))
+                print("\t{:2} days until next new moon".format(int(nextjdc - thisjdc)))
+            except:
+                print("julianday doesn't work")
+                pass
         except:
             pass
 
