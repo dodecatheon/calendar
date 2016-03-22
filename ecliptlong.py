@@ -46,7 +46,7 @@ def ecliptlong(year, month, day, do_print=False):
 
         astrosign = lam / 30.
         octant = lam / 45.
-        season = seasons[octant//2]
+        season = seasons[int(octant//2) % 4]
         xquarter = seasons[((octant+1)%8)//2]
         print("For day = {:04}/{:02}/{:02}:".format(year, month,day))
         print("ecliptic longitude =", lam)
