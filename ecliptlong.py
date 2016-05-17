@@ -38,6 +38,9 @@ def ecliptlong(year, month, day, do_print=False):
 
     lam = L + 1.915 * sin(g_rad) + 0.020 * sin(2*g_rad)
 
+    while lam > 360.:
+        lam -= 360.
+
     if (do_print):
         seasons = { 0:'SPRING',
                     1:'SUMMER',
@@ -73,7 +76,20 @@ def ecliptlong(year, month, day, do_print=False):
                                                     pyear))
         except:
             pass
+        try:
+            from ephem import Sun, Ecliptic
+            sun = Sun()
+            ymdstr = "{:04}/{:02}/{:02}".format(year, month, day)
+            sun.compute(ymdstr, ymdstr)
+            eph_lam = float(Ecliptic(sun).lon) / pi * 180.
+            eph_sign = eph_lam / 30.
+            print("ephem ecliptic longitude =", eph_lam)
+            print("ephem astrological sign position =", eph_sign)
+        except:
+            pass
+
     return lam
+
 
 if __name__ == "__main__":
     import sys
