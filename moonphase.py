@@ -132,17 +132,27 @@ def moonphase(year, month, day, do_print=False):
             thisdate = ephem.Date('{:04}/{:02}/{:02} 00:00:01'.format(year, month, day))
             prevmoon = ephem.previous_new_moon(thisdate)
             nextmoon = ephem.next_new_moon(thisdate)
+            prevfull = ephem.previous_full_moon(thisdate)
+            nextfull = ephem.next_full_moon(thisdate)
             prevymd = prevmoon.tuple()[:3]
             nextymd = nextmoon.tuple()[:3]
-            print("\t{}".format(prevmoon), "UTC = Previous New Moon")
+            pfymd = prevfull.tuple()[:3]
+            nfymd = nextfull.tuple()[:3]
+            print("\n\t{}".format(prevmoon), "UTC = Previous New Moon")
             print("\t{}".format(nextmoon), "UTC = Next New Moon")
+            print("\t{}".format(prevfull), "UTC = Previous Full Moon")
+            print("\t{}".format(nextfull), "UTC = Next Full Moon")
             try:
                 from convertdate import julianday
                 thisjdc = julianday.from_gregorian(year, month, day)
                 prevjdc = julianday.from_gregorian(*prevymd)
                 nextjdc = julianday.from_gregorian(*nextymd)
+                pfjdc = julianday.from_gregorian(*pfymd)
+                nfjdc = julianday.from_gregorian(*nfymd)
                 print("\t{:2} days since prev new moon".format(int(thisjdc - prevjdc)))
                 print("\t{:2} days until next new moon".format(int(nextjdc - thisjdc)))
+                print("\t{:2} days since prev full moon".format(int(thisjdc - pfjdc)))
+                print("\t{:2} days until next full moon".format(int(nfjdc - thisjdc)))
             except:
                 print("julianday doesn't work")
                 pass
