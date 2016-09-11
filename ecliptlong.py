@@ -77,14 +77,22 @@ def ecliptlong(year, month, day, do_print=False):
         except:
             pass
         try:
-            from ephem import Sun, Ecliptic
-            sun = Sun()
+            import ephem
+            sun = ephem.Sun()
             ymdstr = "{:04}/{:02}/{:02}".format(year, month, day)
             sun.compute(ymdstr, ymdstr)
-            eph_lam = float(Ecliptic(sun).lon) / pi * 180.
+            eph_lam = float(ephem.Ecliptic(sun).lon) / pi * 180.
             eph_sign = eph_lam / 30.
             print("ephem ecliptic longitude =", eph_lam)
             print("ephem astrological sign position =", eph_sign)
+            print("ephem previous solstice =",
+                  ephem.previous_solstice(ymdstr))
+            print("ephem previous equinox =",
+                  ephem.previous_equinox(ymdstr))
+            print("ephem next solstice =",
+                  ephem.next_solstice(ymdstr))
+            print("ephem next equinox =",
+                  ephem.next_equinox(ymdstr))
         except:
             pass
 
