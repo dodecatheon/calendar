@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 import ephem
-from itertools import izip as zip
 from pprint import pprint
-range = xrange
+try:
+    range = xrange
+    input = raw_input
+    from itertools import izip as zip
+except NameError:
+    pass
 
 mytups = []
 
