@@ -14,8 +14,8 @@ rational approximations.
 from math import log10, floor, sqrt
 
 # Default constants
-MAX_PLACES = 8
-EPS = 1.e-14
+MAX_PLACES = 12
+EPS = 1.e-18
 
 # TO DO:  Figure out how to turn this into a generator
 def continued_fraction(x, max_places=MAX_PLACES, eps=EPS):
@@ -68,7 +68,7 @@ def continued_fraction(x, max_places=MAX_PLACES, eps=EPS):
 def main(x):
     fmt = ( " a_{i:02} = {a:5} ; "
             "x ~= {p:10} / {q:10} "
-            "= {approx:20.15f}, "
+            "= {approx:25.20f}, "
             "err = {err:+13.8e}" )
 
     print("Continued fraction terms, with rational approximations:")

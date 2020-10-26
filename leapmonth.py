@@ -35,15 +35,10 @@ def leapmonth(hyear, do_print=False):
     rectleap = ((130 * hyear + 268) % 353) < 130
 
     if do_print:
-        print(hyear, tradleap, rectleap)
-        # if tradleap:
-        #     print(hyear, "is a traditional leap year.")
-        # else:
-        #     print(hyear, "is not a traditional leap year.")
-        # if rectleap:
-        #     print(hyear, "is a rectified leap year.")
-        # else:
-        #     print(hyear, "is not a rectified leap year.")
+        is_is_not = {True:"*IS*", False:"*IS NOT*"}
+        print("Hebrew year", hyear,
+              is_is_not[tradleap], "a traditional leap year, and",
+              is_is_not[rectleap], "a rectified leap year")
 
     return (tradleap, rectleap)
 
